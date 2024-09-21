@@ -1,0 +1,231 @@
+\documentclass[12pt]{amsart}
+
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-2.5cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{15pt}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[colorlinks = true, linkcolor = black, citecolor = black, final]{hyperref}
+\usepackage{pgfplots}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{empheq}
+
+\newcommand{\ds}{\displaystyle}
+\DeclareMathOperator{\sech}{sech}
+
+
+\setlength{\parindent}{0in}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+{\scshape Komplexe Analysis} \hfill {\scshape \large Ein Integral} \hfill {\scshape 2024}
+ 
+\smallskip
+
+\hrule
+
+\bigskip
+$$\int_{-\infty}^\infty \frac{\sin{(x)}}{x}dx$$
+
+Zuerst wollen wir die Grenzen etwas umformen. Die Zähler- und Nennerfunktion des Integranden sind beides ungerade Funktionen, somit ist der Integrand eine gerade Funktion. Dies ermöglich folgende transformation: $$\int_{-\infty}^\infty \frac{\sin{(x)}}{x}dx = 2 \cdot \int_0^\infty \frac{\sin{(x)}}{x}dx$$
+
+Nun wollen wir eine neue Funktion einbringen, hierzu ersetzen wir $\sin{(x)}$ mit $e^{i\cdot z}$ (dies ergiebt wegen der \textbf{Euler Formel} \ Sinn: $e^{ix} = \cos{(x)} + i\sin{(x)}$)  und $x$ mit $z$. Unsere neue Funktion $f(z)$ sieht also folgendermaßen aus: $$f(z) = \frac{e^{iz}}{z}$$
+
+\begin{minipage}{0.4\textwidth}
+    Nun möchten wir unsere Kontur konstruieren. Wichtig ist zu beachten, dass im Ursprung eine Singularität vorliegt, wegen dem $z$ im Nenner. Diese möchten wir weglassen. Dazu gehen wir einfach ausenrum und lassen später $\epsilon \to 0$ gehen. Wir gehen gegen den Uhrzeigersinn, wie an den Pfeilen deutlich wird.
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+    \begin{tikzpicture}
+        \begin{axis}[clip=false, 
+            ymin=-0.5, ymax=4.5, xmin=-4.5, xmax=4.5,
+            axis lines = middle, 
+            xlabel=$Re$, ylabel=$Im$,
+            xlabel style = {font=\tiny,xshift=0.5ex},
+            ylabel style = {font=\tiny,yshift=0.5ex},
+            ytick={}, yticklabels={}, ticklabel style = {font=\tiny,xshift=0.5ex},
+            xticklabel style = {font=\tiny,yshift=0.5ex},
+            xtick={}, xticklabels={}, width= 11cm, height = 6cm]
+            \addplot[samples= 100, color=blue, thick, domain=-4:-1]{0} node[below] {$-\epsilon$} node[pos= 0, below] {$-R$};
+            \addplot[samples= 100, color=blue, thick, domain=1:4]{0} node[below] {$R$} node[pos= 0, below] {$\epsilon$} node[pos= 0.7, above] {$C$};
+            \draw[color= blue, thick] (550,50) arc[radius =100, start angle= 0, end angle= 180] node[pos = 0.2, right] {$\gamma$};
+            \draw[color= blue, thick] (850,50) arc[radius =400, start angle= 0, end angle= 180] node[pos = 0.1, right] {$\Gamma$};
+            \fill[red] (450,50) circle[radius= 7.5];
+            \draw[->, thick, color=blue] (250,50) -- (275,50);
+            \draw[->, thick, color=blue] (650,50) -- (675,50);
+            \draw[->, thick, color=blue] (450,150) -- (450.1,150);
+            \draw[<-, thick, color=blue] (450,450) -- (450.1,450);
+        \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+
+Nun können wir unser Kurvenintegral aufstellen. Nach dem \textbf{Cauchyschen Integralsatz} ist dieses gleich null. Für das erste und das dritte Integral verwenden wir $f(x)$, da wir uns hier nur über die reellen Zahlen bewegen. $$\oint_{C}f(z) dz = \int_{-R}^{-\epsilon} f(x) dx + \int_\gamma f(z) dz + \int_\epsilon^R f(x) dx + \int_\Gamma f(z) dz = 0$$
+
+Nun möchten wir das erste und das dritte Integral lösen:
+
+$$ \int_\epsilon^R f(x) dx + \int_{-R}^{-\epsilon} f(x) dx = \int_\epsilon^R \frac{e^{ix}}{x} dx + \int_{-R}^{-\epsilon} \frac{e^{ix}}{x} dx$$
+
+Die Grenzen sind fast die gleichen. Um diese umzuformen substituieren wir bei $\int_{-R}^{-\epsilon} \frac{e^{ix}}{x} dx$ mit $u = -x$. Damit ist $du = -dx$:
+
+$$\int_{-R}^{-\epsilon} \frac{e^{ix}}{x} dx = \int_{-R}^{-\epsilon} \frac{e^{-iu}}{-u} \cdot -du = - \int_{\epsilon}^{R} \frac{e^{-iu}}{u} du$$
+
+Das Integral ist unabhängig von $u$, somit können wir die Variable wieder zu $x$ ändern. Nun haben wir die selben Grenzen und können somit die beiden Integranden zusammenbringen: 
+
+$$\int_\epsilon^R \frac{e^{ix}}{x} dx - \int_\epsilon^R \frac{e^{-ix}}{x} dx = \int_\epsilon^R \frac{e^{ix}-e^{-ix}}{x} dx$$
+
+Wenn wir nun das Integral mit $\frac{2i}{2i}$ multiplizieren, finden wir die komplexe Definition von $\sin{(x)}$ mit $\sin{(x)} = \frac{e^{ix}- e^{-ix}}{2i}$:
+
+$$2i\cdot \int_\epsilon^R \frac{e^{ix}-e^{-ix}}{2i\cdot x} dx = 2i \cdot \int_\epsilon^R \frac{\sin{(x)}}{x} dx$$
+
+Dies ist sehr gut, da dies die Funktion ist, die wir wollten. Später werden wir den Limes von $R \to \infty$ und den Limes von $\epsilon \to 0$ bilden. Wenn wir dies jetzt machen sieht unser Integral so aus: $\lim_{R \to \infty} \lim_{\epsilon \to 0} 2i \cdot \int_\epsilon^R \frac{\sin{(x)}}{x} dx = 2i \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx$
+
+\smallskip
+
+Unsere Kurvenintegral sieht also bis jetzt so aus (zu beachten ist, dass hier schon beim ersten Integral der Limes gebildet wurde):
+
+$$\oint_{C}f(z) dz = 2i \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx + \int_\gamma f(z) dz + \int_\Gamma f(z) dz = 0$$
+
+Nun schauen wir uns das Integral über $\gamma$ an: 
+
+$$\int_\gamma f(z) dz = \int_\gamma \frac{e^{iz}}{z} dz$$
+
+Hier möchten wir parametrisieren (siehe Definition): sei $\gamma(t) = \epsilon e^{i(\pi - t)}$ mit $ 0 \leq t \leq \pi$ Der Grund warum dass funktioniert ist, dass wir ein bisschen um den Ursprung rotieren möchten und der Radius unseres Kreises ist $\epsilon$. Im exponenten ist ein $(\pi -t)$ notwendig, da wir gegen die Uhrzeigersinn gehen, mit dem Uhrzeigersinn würde ein $t$ genügen. 
+
+$$\gamma(t) = \epsilon e^{i(\pi - t)} \Rightarrow \dot{\gamma}(t) = -i \cdot \epsilon e^{i(\pi - t)} = -i \gamma(t)$$
+$$\int_\gamma \frac{e^{iz}}{z} dz = \int_0^\pi \frac{e^{i\gamma(t)}}{\gamma(t)} \cdot -i\gamma(t) dt = -i \int_0^\pi e^{i\epsilon e^{i(\pi - t)}} dt$$
+
+Nun bilden wir den Limes von $\epsilon \to 0$. Damit wird der gesamte Exponent unseres Integral $0$ und $e^0 = 1$:
+$$\lim_{\epsilon \to 0} -i \int_0^\pi e^{i\epsilon e^{i(\pi - t)}} dt = -i \int_0^\pi dt = -i\pi$$
+
+Also: $$\oint_{C}f(z) dz = 2i \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx + (-i\pi) + \int_\Gamma f(z) dz = 0$$
+
+Nun schauen wir uns das Integral über $\Gamma$ an: 
+
+$$\int_\Gamma f(z) dz = \int_\Gamma \frac{e^{iz}}{z} dz$$
+
+Nun müssen wir wie bei $\gamma$ erneut parametrisieren: Sei $\varphi(t) = Re^{it}$ mit $0 \leq t \leq \pi$ 
+
+$$\varphi(t) = Re^{it} \Rightarrow \dot{\varphi}(t) = i\cdot Re^{it} = i \varphi(t)$$
+$$\int_\Gamma \frac{e^{iz}}{z} dz = \int_0^\pi \frac{e^{i\varphi(t)}}{\varphi(t)} i \varphi(t) dt = i \int_0^\pi e^{iRe^{it}} dt$$
+
+Um dieses Integral abzuschätzen benutzen wir die \textbf{Standardabschätzung für Wegintegrale} (beachte: $|i| = 1$):
+
+$$\left|i \int_0^\pi e^{iRe^{it}} dt\right| = |i| \cdot \left| \int_0^\pi e^{iRe^{it}} dt\right| = \left| \int_0^\pi e^{iRe^{it}} dt\right|$$
+
+Nun benutzen wir \textbf{Eulers Formel} ($e^{it} = \cos{(t)} + i\sin{(t)}$: 
+
+$$\left| \int_0^\pi e^{iRe^{it}} dt\right| = \left| \int_0^\pi e^{iR(\cos{(t)} + i\sin{(t)})} dt\right| = \left| \int_0^\pi e^{iR\cos{(t)}} \cdot e^{-R\sin{(t)}} dt\right| $$
+
+Nun benutzen wir die \textbf{Hölder-Ungleichung}:
+
+$$ \left| \int_0^\pi e^{iR\cos{(t)}} \cdot e^{-R\sin{(t)}} dt\right| \leq \int_0^\pi \left|e^{iR\cos{(t)}}\right| \cdot \left|e^{-R\sin{(t)}} \right| dt $$
+
+Der Modulo von $\left|e^{iR\cos{(t)}}\right|$ ist immer 1. Da der Modulo von $e^i$ mal irgendeine reelle Zahl immer 1 ist, da jeder Punkt auf dem Einheitskreis genau 1 LE vom Ursprung liegt. $\left|e^{-R\sin{(t)}} \right|$ ist immer größer 0, da $e^x > 0 \ \ \forall x \in \mathbb{R}$. Der Betrag fällt also weg
+
+$$ \left| \int_0^\pi e^{iR\cos{(t)}} \cdot e^{-R\sin{(t)}} dt\right| \leq \int_0^\pi \left|e^{iR\cos{(t)}}\right| \cdot \left|e^{-R\sin{(t)}} \right| dt = \int_0^\pi e^{-R\sin{(t)}} dt$$
+
+Wenn wir nun den Limes bilden von $R \to \infty$, wird das Integral 0, davor muss jedoch beachtet werden: $\sin{(0)} = 0$ und $\sin{(\pi)} = 0$. Hier wird unsere Integrand also 1. Wir müssen die Grenzen folgendermaßen ändern: $[0;\pi] \longrightarrow ]0;\pi[$. Dies können wir machen, da sich unsere Integral, egal welches Intervall wir nehmen, den selben Wert hat. Also: 
+
+$$\lim_{R \to \infty} \int_0^\pi e^{-R\sin{(t)}} dt = \int_0^\pi 0 dt = 0$$
+
+Somit muss unsere Integral immer kleiner oder gleich 0 sein. Somit ist $\int_\Gamma \frac{e^{iz}}{z} dz = 0$. \\
+
+Also: 
+
+$$\oint_{C}f(z) dz = \int_{-R}^{-\epsilon} f(x) dx + \int_\gamma f(z) dz + \int_\epsilon^R f(x) dx + \int_\Gamma f(z) dz = 0$$
+$$\overset{R \to \infty, \epsilon \to 0}{=} 2i \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx + (-i\pi) + 0 = 0$$
+$$= 2i \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx = i\pi$$
+$$= 2 \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx = \pi$$
+
+Also: 
+
+\begin{empheq}[box=\fbox]{align*}
+    2 \cdot \int_0^\infty \frac{\sin{(x)}}{x} dx = \int_{-\infty}^\infty \frac{\sin{(x)}}{x}dx = \pi
+\end{empheq}
+
+\bigskip
+
+\bigskip
+
+\textbf{Definitionen:}
+
+\bigskip
+
+\textbf{Euler Formel:}
+
+\smallskip
+
+Die eulersche Formel bezeichnet die für alle $y \in \mathbb{R}$ gültige Gleichung $$e^{iy} = \cos{(y)} + i\sin{(y)}$$
+
+Dies lässt sich mit \textbf{Taylorreihen} bzw. \textbf{Maclaurin-Reihen} beweisen.
+
+\bigskip
+
+\textbf{Definition Taylorreihe (und Maclaurin-Reihe):}
+
+\smallskip
+
+Ist $I \subset \mathbb{R}$ ein offenes Intervall, $f: I \rightarrow \mathbb{R}$ eine glatte Funktion und $a$ ein Element von $I$, so heißt die unendliche Reihe $$Tf(x;a) := \sum_{n = 0}^\infty \frac{f^{(n)}(a)}{n!}(x - a)^n = f(a) + f^\prime(a)(x - a) + \frac{f^{\prime\prime}(a)}{2}(x - a)^2 + \frac{f^{\prime\prime\prime}(a)}{6}(x - a)^3 + \dots$$ die \textbf{Taylorreihe} von $f$ mit Entwicklungsstelle $a$. Hierbei bezeichnet $n!$ die Fakultät von $n$ und $f^{(n)}$ die $n$-te Ableitung von $f$, wobei man $f^{(0)} .= f$ setzt. Im Spezialfall $a = 0$ wird die \textbf{Taylorreihe} auch \textbf{Maclaurinsche-Reihe} genannt.
+
+\bigskip
+
+Reihenentwicklung für $f(x) = \sin{(x)}$ an der Stelle $a = 0$ (bzw. $x_0 = 0$) (Maclaurinsche-Reihe): $$\sin{(x)} = \sum_{n = 0}^\infty (-1)^n \cdot \frac{x^{2n + 1}}{(2n + 1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \frac{x^9}{9!} - \dots$$
+
+\smallskip
+
+Reihenentwicklung für $f(x) = \cos{(x)}$ an der Stelle $a = 0$ (bzw. $x_0 = 0$) (Maclaurinsche-Reihe): $$\cos{(x)} = \sum_{n = 0}^\infty (-1)^n \cdot \frac{x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \frac{x^8}{8!} - \dots$$
+
+\smallskip
+
+Reihenentwicklung für $f(x) = e^x$ an der Stelle $a = 0$ (bzw. $x_0 = 0$) (Maclaurinsche-Reihe): $$e^x = \sum_{n = 0}^\infty \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \frac{x^5}{5!} + \dots$$
+
+\smallskip
+
+Die Eulersche Formel erweitert die natürliche Exponentialfunktion auf imaginäre Zahlen: $$e^{iy} = \sum_{n = 0}^\infty \frac{(iy)^n}{n!} = i^0y^0 + i^1y^1 + \frac{i^2y^2}{2!} + \frac{i^3y^3}{3!} + \frac{i^4y^4}{4!} + \frac{i^5y^5}{5!} + \dots$$
+
+Mit $$i = i, \quad i^2 = -1, \quad i^3 = -i, \quad i^4 = 1, \quad i^5 = i, \dots$$
+
+ergibt das $$e^{iy} = \sum_{n = 0}^\infty \frac{(iy)^n}{n!} = 1 + iy - \frac{y^2}{2!} - i\frac{y^3}{3!} + \frac{y^4}{4!} + i\frac{y^5}{5!} + \dots =$$ 
+$$= \left[1 - \frac{y^2}{2!} + \frac{y^4}{4!} - \dots \right] + i \left[x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots \right] = $$ 
+$$=  \underbrace{\sum_{n = 0}^\infty (-1)^n \cdot \frac{y^{2n}}{(2n)!}}_{\cos{(y)}} + i \cdot \underbrace{\sum_{n = 0}^\infty (-1)^n \cdot \frac{y^{2n + 1}}{(2n + 1)!}}_{\sin{(y)}}$$
+und somit die Eulersche Formel.
+
+\bigskip
+
+\textbf{Cauchyscher Integralsatz für Elementargebiete:}
+
+\smallskip
+
+Sei $D \subseteq \mathbb{C}$ ein Elementargebiet, also ein Gebiet, auf dem jede holomorphe Funktion $f: D \rightarrow \mathbb{C}$ eine Stammfunktion besitzt. Der Cauchysche Integralsatz besagt nun, dass $$\oint_\gamma f(z) dz = 0$$
+
+\bigskip
+
+\textbf{Einfluss der Parametrisierung:} 
+
+\smallskip
+
+Da eine Kurve $C$ das Bild eines Weges $\gamma$ ist, entsprechen die Definitionen der Kurvenintegrale im Wesentlichen den Wegintegralen. 
+
+\smallskip
+
+Kurvenintegral 2. Art:$$\oint_C f(x) \cdot dx := \int_a^b f(\gamma(t)) \cdot \dot{\gamma}(t) dt$$ Dabei bezeichnet $\dot{\gamma}$ die Ableitung von $\gamma$ nach $t$.
+
+\bigskip
+
+\textbf{Hölder-Ungleichung}
+
+\smallskip
+
+In unserem Fall genügt folgende Erkenntnis, die genaue Definition würde den Rahmen sprengen: $$\left| \int_a^b f(x) \cdot g(x) dx\right| \leq \int_a^b \left|f(x)\right| \cdot \left|g(x)\right| dt$$
+\end{document}
