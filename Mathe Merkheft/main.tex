@@ -1,0 +1,113 @@
+\documentclass[12pt,a4paper]{report}
+\renewcommand{\baselinestretch}{1.2} 
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{gauss}
+\usepackage{pst-eucl}
+\usepackage{esvect}
+\usepackage{tikz-3dplot}
+\usepackage{array}
+\usepackage{outlines}
+\usepackage[fleqn]{mathtools}
+\usetikzlibrary{angles, quotes}
+
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+%Vektoren
+\usepackage{physics}
+\usepackage[outline]{contour} % glow around text
+\usetikzlibrary{angles,quotes} % for pic
+\tikzset{>=latex}
+\tikzstyle{vector}=[->,very thick]
+
+%Ebenen
+\usetikzlibrary{calc}
+\usepackage{physics}
+
+\usetikzlibrary{decorations.markings}
+\tikzset{->-/.style={decoration={% https://tex.stackexchange.com/a/39282/194703
+  markings,
+  mark=at position #1 with {\arrow{>}}},postaction={decorate}},
+  ->-/.default=0.5}
+
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\g@matrix
+ {\vbox\bgroup}
+ {\vbox\bgroup\normalbaselines}% restore the standard baselineskip
+ {}{}
+\makeatother
+\usetikzlibrary{shapes.misc}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={2.5pt}}
+
+
+\newcommand{\BAR}{%
+  \hspace{-\arraycolsep}%
+  \strut\vrule % the `\vrule` is as high and deep as a strut
+  \hspace{-\arraycolsep}%
+}
+
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=lightgray!20]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+%\captionsetup{justification=centering,margin={5cm,-2cm}}
+% \usepackage[utf8]{inputenc} is no longer required (since 2018)
+
+%Set the font (output) encoding
+%--------------------------------------
+\usepackage[T1]{fontenc} %Not needed by LuaLaTeX or XeLaTeX
+%--------------------------------------
+
+%German-specific commands
+%--------------------------------------
+\usepackage[ngerman]{babel}
+
+%Hyphenation rules
+%--------------------------------------
+\usepackage{hyphenat}
+\hyphenation{Mathe-matik wieder-gewinnen}
+%--------------------------------------
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+
+\title{Mathe Merkheft
+{\\\Large Herzog-Christoph-Gymnasium Beilstein}}
+\author{Luke Moll}
+\date{Abitur Schuljahr 2025}
+
+\begin{document}
+\newtheorem{satz}{Satz}
+\newtheorem{definition}{Definition}
+\maketitle
+\begin{abstract}
+    Dieses Dokument fässt alle wichtigen Dinge aus dem Mathe-LK-Unterricht zusammen, gegliedert in zwei Teile: \\ 1. Merkheft mit Definitionen, Sätzen und Erklärungen. Die Beispiele in diesem Teil dienen meist nur zur Erklärung und gehen nicht in die oft gebrauchte Tiefe. \\ 2. Hier findet man weiter Verweise zu wichtigen Aufgaben, welche sich im Schulbuch \textit{Lambacher Schweizer Mathematik Kursstufe - Leistungsfach} finden.\\
+    \ \\
+    Dieses Dokument ist NICHT zur Weiterreichung oder Verfielfältigung gedacht!
+\end{abstract}
+\tableofcontents
+\vspace{2cm} %Add a 2cm space
+
+\include{Grundlagen der Differenzialrechnung}
+\include{Lineare Gleichungen}
+\include{Geraden und Ebenen}
+\include{Exponential- und Logarithmusfuktionen}
+\include{Integralrechnung}
+\include{Funktionen und ihre Graphen}
+
+\end{document}
